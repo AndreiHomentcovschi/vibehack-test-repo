@@ -1,6 +1,6 @@
 # Invoice Service
 
-Small service that exports invoices and recieves payment webhooks from Stripe.
+Small service that exports invoices and receives payment webhooks from Stripe.
 
 ## Modules
 - `src/utils.py` — formatting helpers
