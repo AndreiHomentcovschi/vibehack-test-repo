@@ -18,3 +18,8 @@ def invoice_number(sequence: int, year: int, prefix: str = "INV") -> str:
     if sequence < 1:
         raise ValueError("sequence starts at 1")
     return f"{prefix}-{year}-{sequence:05d}"
+
+
+def normalize_whitespace(text: str) -> str:
+    """'Acme   SRL\t' -> 'Acme SRL'."""
+    return " ".join(text.split())
