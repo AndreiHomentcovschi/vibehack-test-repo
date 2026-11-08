@@ -11,3 +11,6 @@ def export_invoices(invoices: list[dict]) -> str:
     for invoice in invoices:
         writer.writerow([invoice["id"], invoice["customer"], format_amount(invoice["amount_cents"])])
     return buffer.getvalue()
+
+
+EXPORT_COLUMNS = ["number", "issued_at", "amount", "currency"]
