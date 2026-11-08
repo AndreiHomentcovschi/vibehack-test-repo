@@ -16,3 +16,20 @@ def handle_payment_succeeded(event: dict) -> None:
             if attempt == MAX_ATTEMPTS:
                 raise
             time.sleep(2 ** attempt)
+
+
+import hmac
+import os
+
+
+def signing_secrets() -> list[str]:
+    """Current secret first, then the previous one while it is rotated out."""
+    secrets = [os.environ["STRIPE_WEBHOOK_SECRET"]]
+    if os.getenv("STRIPE_WEBHOOK_SECRET_PREVIOUS"):
+        secrets.append(os.environ["STRIPE_WEBHOOK_SECRET_PREVIOUS"])
+    return secrets
+
+
+def signature_matches(payload: bytes, signature: str) -> bool:
+    return any(hmac.compare_digest(hmac.new(s.encode(), payload, "sha256").hexdigest(), signature)
+               for s in signing_secrets())
